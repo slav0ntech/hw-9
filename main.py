@@ -1,17 +1,20 @@
 import re
 
-CONTACTS = dict()  # {'name': 'tel number'}
+CONTACTS = dict()
 
 
 def handler_add_contact(contact: str):
-    item_add_remove = [x for x in contact.split(' ') if x != 'add']
-    for k, v in zip(['name', 'number'], item_add_remove):
-        CONTACTS[k] = v
-    print(f'{CONTACTS}')
+    list_item_add_remove = [x for x in contact.split(' ') if x != 'add']
+    CONTACTS[list_item_add_remove[0]] = list_item_add_remove[1]
 
 
-def handler_change_contact():
-    pass
+def handler_change_contact(contact):
+    dict_result = {}
+    list_item_change_remove = [x for x in contact.split(' ') if x != 'change']
+    dict_result[list_item_change_remove[0]] = list_item_change_remove[1]
+    for key in CONTACTS.keys():
+        if key in dict_result:
+            CONTACTS[key] = dict_result[key]
 
 
 def handler_get_contact():
@@ -19,7 +22,7 @@ def handler_get_contact():
 
 
 def handler_show_all_contacts():
-    pass
+    print(f'{CONTACTS}')
 
 
 def main():
@@ -27,7 +30,7 @@ def main():
     pattern_change_conact = r'^[change]{6}\s{1}'
 
     while True:
-        result = input("waitinig command -> ...\n")
+        result = input("waiting command -> ...\n")
         if result.lower() in ("good bye", "close", "exit"):
             print(f'Good bye!')
             break
@@ -38,7 +41,12 @@ def main():
         elif re.findall(pattern_add_conact, result):
             handler_add_contact(result)
 
+        elif re.findall(pattern_change_conact, result):
+            handler_change_contact(result)
 
-# def save_contacts(contacts: str):
+        elif result.lower() in ("show all"):
+            handler_show_all_contacts()
+
+
 if __name__ == "__main__":
     main()
