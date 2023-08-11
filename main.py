@@ -3,12 +3,21 @@ import re
 CONTACTS = dict()
 
 
+def input_error(func):
+    def fixed_contacts(x):
+        result = func(x)
+        return result
+    return fixed_contacts
+
+
+@input_error
 def handler_add_contact(contact: str):
     list_item_add_remove = [x for x in contact.split(' ') if x != 'add']
     CONTACTS[list_item_add_remove[0]] = list_item_add_remove[1]
+    return CONTACTS
 
 
-def handler_change_contact(contact):
+def handler_change_contact(contact: str):
     dict_result = {}
     list_item_change_remove = [x for x in contact.split(' ') if x != 'change']
     dict_result[list_item_change_remove[0]] = list_item_change_remove[1]
@@ -42,7 +51,8 @@ def main():
             print(f"How can I help you?")
 
         elif re.findall(pattern_add_conact, result):
-            handler_add_contact(result)
+            # handler_add_contact(result)
+            input_error(handler_add_contact(result))
 
         elif re.findall(pattern_change_conact, result):
             handler_change_contact(result)
