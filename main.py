@@ -9,8 +9,8 @@ def input_error(inner):
             return inner(*args)
         except IndexError:
             return "Give me correct name and phone please ..."
-        # except KeyError:
-        #     return "Enter correct user name please ..."
+        except KeyError:
+            return "Enter correct user name please ..."
     return wrap
 
 
@@ -48,7 +48,7 @@ def handler_change_contact(contact: str):
     for key in CONTACTS.keys():
         if key.lower() in dict_result:
             CONTACTS[key] = dict_result[key.lower()]
-        return f'Contact with name {contact[0].title()} and number {contact[1]} has been changed'
+            return f'Contact with name {contact[0].title()} and number {contact[1]} has been changed'
 
 
 def handler_show_all_contacts():
