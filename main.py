@@ -8,7 +8,7 @@ def input_error(inner):
         try:
             return inner(*args)
         except IndexError:
-            return "Give me name and phone please"
+            return "Give me correct name and phone please ..."
     return wrap
 
 
@@ -22,12 +22,15 @@ def parser_command(command):
         print(f'CONTACTS -> {CONTACTS}')
         return handler_show_all_contacts()
 
+    else:
+        return f'Incorrect command "{command}"'
+
 
 @input_error
 def handler_add_contact(contact: str):
     print(f'contact -> {contact}')
     CONTACTS[contact[0].title()] = contact[1]
-    return f'Contact with name {contact[0].title()} and number {contact[1]} is added'
+    return f'Contact with name {contact[0].title()} and number {contact[1]} has been added'
 
 
 def handler_show_all_contacts():
