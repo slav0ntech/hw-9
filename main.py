@@ -9,14 +9,22 @@ def input_error(inner):
             return inner(*args)
         except IndexError:
             return "Give me correct name and phone please ..."
+        # except KeyError:
+        #     return "Enter correct user name please ..."
     return wrap
 
 
 def parser_command(command):
     pattern_add_conact = r'^[aAdD]{3}\s{1}'
+    pattern_change_conact = r'^[cChHaAnNgGeE]{6}\s{1}'
+
     if re.findall(pattern_add_conact, command):
         x = [x.lower() for x in command.split(' ') if x.lower() != 'add']
         return handler_add_contact(x)
+
+    if re.findall(pattern_change_conact, command):
+        x = [x.lower() for x in command.split(' ') if x.lower() != 'change']
+        return handler_change_contact(x)
 
     elif command.lower() == 'show all':
         print(f'CONTACTS -> {CONTACTS}')
@@ -31,6 +39,16 @@ def handler_add_contact(contact: str):
     print(f'contact -> {contact}')
     CONTACTS[contact[0].title()] = contact[1]
     return f'Contact with name {contact[0].title()} and number {contact[1]} has been added'
+
+
+@input_error
+def handler_change_contact(contact: str):
+    dict_result = {}
+    dict_result[contact[0]] = contact[1]
+    for key in CONTACTS.keys():
+        if key.lower() in dict_result:
+            CONTACTS[key] = dict_result[key.lower()]
+        return f'Contact with name {contact[0].title()} and number {contact[1]} has been changed'
 
 
 def handler_show_all_contacts():
