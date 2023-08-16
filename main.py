@@ -72,15 +72,21 @@ def handler_hello_contacts():
 
 def main():
     while True:
-        result = input("~~> ")
-        if result.lower() in ("good bye", "close", "exit"):
-            print(f'Good bye!')
-            break
-        elif not result:
-            continue
-
-        else:
-            print(parser_command(result))
+        try:
+            result = input("~~> ")
+            if result.lower() in ("good bye", "close", "exit"):
+                print(f'Good bye!')
+                break
+            elif not result:
+                continue
+            else:
+                print(parser_command(result))
+        except KeyboardInterrupt:
+            print('\nforce exit')
+            exit()
+        except EOFError:
+            print('\nforce exit')
+            exit()
 
 
 if __name__ == "__main__":
