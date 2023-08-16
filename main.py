@@ -62,10 +62,12 @@ def handler_get_contact(contact: str):
     return CONTACTS[contact[0].title()]
 
 
+@input_error
 def handler_show_all_contacts():
     return CONTACTS
 
 
+@input_error
 def handler_hello_contacts():
     return f'How can I help you?'
 
