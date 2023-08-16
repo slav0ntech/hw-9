@@ -31,6 +31,9 @@ def parser_command(command):
         x = [x.lower() for x in command.split(' ') if x.lower() != 'phone']
         return handler_get_contact(x)
 
+    elif command.lower() == 'hello':
+        return handler_hello_contacts()
+
     elif command.lower() == 'show all':
         return handler_show_all_contacts()
 
@@ -63,9 +66,13 @@ def handler_show_all_contacts():
     return CONTACTS
 
 
+def handler_hello_contacts():
+    return f'How can I help you?'
+
+
 def main():
     while True:
-        result = input("waiting command -> ...\n")
+        result = input("~~> ")
         if result.lower() in ("good bye", "close", "exit"):
             print(f'Good bye!')
             break
